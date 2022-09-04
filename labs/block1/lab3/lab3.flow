@@ -1,0 +1,87 @@
+import runtime;
+import string;
+
+aisum(arr : [int]) -> int {
+	fold(arr, 0, \x, y -> x + y);
+}
+
+fibRecursive(n : int) -> [int] {
+	if (n < 2) {
+		[0];
+	}
+	else {
+		if (n == 2) {
+			[0, 1];
+		}
+		else {
+			concat(fibRecursive(n - 1), [aisum(subrange(fibRecursive(n - 1), n - 3, 2))])
+		}
+	}
+		
+}
+
+fibTailRecursiveExecutor(n : int, arr : [int], a : int, b : int) -> [int] {
+	if (n < 3) {
+		arr;
+	}
+	else {
+		fibTailRecursiveExecutor(n - 1, concat(arr, [a + b]), b, a + b);
+	}
+}
+
+fibTailRecursive(n : int) -> [int] {
+	if (n < 2) {
+		[0];
+	}
+	else {
+		arr = [0, 1];
+		fibTailRecursiveExecutor(n, arr, 0, 1);
+	}
+}
+
+fibRefExecutor(n : int, arr : ref [int], a : int, b : int) {
+	if (n < 3) {
+		^arr;
+	}
+	else {
+		refArrayPush(arr, a + b);
+		fibRefExecutor(n - 1, arr, b, a + b);
+	}
+}
+
+fibRef(n : int) -> [int] {
+	if (n < 2) {
+		[0];
+	}
+	else {
+		arr = ref [0, 1];
+		fibRefExecutor(n, arr, 0, 1);
+	}
+}
+
+main() {
+	println(fibRecursive(1));
+	println(fibRecursive(2));
+	println(fibRecursive(3));
+	println(fibRecursive(4));
+	println(fibRecursive(5));
+	println(fibRecursive(6));
+
+	println("_________________");
+
+	println(fibTailRecursive(1));
+	println(fibTailRecursive(2));
+	println(fibTailRecursive(3));
+	println(fibTailRecursive(4));
+	println(fibTailRecursive(5));
+	println(fibTailRecursive(6));
+
+	println("_________________");
+
+	println(fibRef(1));
+	println(fibRef(2));
+	println(fibRef(3));
+	println(fibRef(4));
+	println(fibRef(5));
+	println(fibRef(6));
+}

@@ -1,0 +1,604 @@
+539 isSameStructType$init
+592 flow$init
+606 flow
+621 flow$init
+626 either$init
+642 either
+713 either$init
+718 redirectAdditionalFn$init
+748 redirectAdditionalFn$1
+769 redirectAdditionalFn
+775 concat$init
+808 fold$init
+837 foldi$init
+868 length$init
+901 map$init
+928 replace$init
+963 arrayPush$init
+982 arrayPush
+1023 arrayPush$init
+1028 extractStruct$init
+1051 extractStruct
+1075 extractStruct$1
+1137 extractStruct
+1153 extractStruct$init
+1187 loggingEnabled$init
+1209 securityModes$init
+1233 isOWASPLevel1$init
+1256 isOWASPLevel1
+1296 isOWASPLevel1$init
+1301 isVerboseOutput$init
+1326 isVerboseOutput
+1337 isVerboseOutput$1
+1340 isVerboseOutput
+1369 isVerboseOutput$init
+1374 isLoggingEnabled$init
+1400 isLoggingEnabled
+1436 isLoggingEnabled$init
+1441 max$init
+1454 max
+1496 max$init
+1525 println2$init
+1561 localStorageEnabled$init
+1588 println$init
+1605 println
+1647 println$init
+1652 lookupTree$init
+1672 lookupTree
+1890 lookupTree$init
+1926 setTree$init
+1943 setTree
+2258 setTree$init
+2291 makeTree$init
+2309 makeTree
+2315 makeTree$init
+2320 treeDepth$init
+2339 treeDepth
+2470 treeDepth$init
+2475 lookupTreeDef$init
+2498 lookupTreeDef
+2539 lookupTreeDef$init
+2544 mkTreeNode$init
+2564 mkTreeNode
+2633 mkTreeNode$init
+2638 getTreeArrayValue$init
+2665 getTreeArrayValue
+2700 getTreeArrayValue$init
+2705 treeLeftRotation$init
+2731 treeLeftRotation
+3024 treeLeftRotation$init
+3029 treeRightRotation$init
+3056 treeRightRotation
+3349 treeRightRotation$init
+3354 rebalancedTree$init
+3378 rebalancedTree
+3967 rebalancedTree$init
+3972 inds$init
+3986 inds
+4020 inds$1
+4059 inds$2
+4132 inds$1
+4148 inds
+4168 inds$init
+4173 inds2$init
+4188 inds2
+4218 inds2$1
+4283 inds2
+4323 inds2$2
+4429 inds2$3
+4454 inds2$2
+4476 inds2
+4496 inds2$init
+4501 main$init
+4515 main
+4614 main$init
+
+0 D:\flow9\lib\ds\tuples.flow 7 1
+39 D:\flow9\lib\ds\tuples.flow 3 1
+77 D:\flow9\lib\ds\tuples.flow 5 1
+141 D:\flow9\lib\ds\tuples.flow 4 1
+191 D:\flow9\lib\dynamic.flow 10 2
+217 D:\flow9\lib\maybe.flow 9 1
+234 D:\flow9\lib\maybe.flow 10 1
+261 D:\flow9\lib\ds\list.flow 11 2
+296 D:\flow9\lib\ds\list.flow 9 2
+318 D:\flow9\lib\securitymode.flow 5 2
+346 D:\flow9\lib\securitymode.flow 7 2
+379 D:\flow9\lib\ds\tree.flow 42 2
+406 D:\flow9\lib\ds\tree.flow 41 2
+449 D:\flow9\lib\ds\tree.flow 14 2
+471 D:\flow9\lib\ds\tree.flow 13 2
+539 D:\flow9\lib\dynamic.flow 5 1
+592 D:\flow9\lib\dynamic.flow 80 0
+606 D:\flow9\lib\dynamic.flow 81 1
+615 D:\flow9\lib\dynamic.flow 81 6
+620 D:\flow9\lib\dynamic.flow 82 0
+626 D:\flow9\lib\maybe.flow 54 0
+642 D:\flow9\lib\maybe.flow 55 1
+651 D:\flow9\lib\maybe.flow 55 9
+682 D:\flow9\lib\maybe.flow 56 10
+692 D:\flow9\lib\maybe.flow 57 2
+707 D:\flow9\lib\maybe.flow 57 11
+712 D:\flow9\lib\maybe.flow 58 0
+743 D:\flow9\lib\net\url.flow 29 68
+757 D:\flow9\lib\net\url.flow 29 82
+762 D:\flow9\lib\net\url.flow 29 82
+775 D:\flow9\lib\ds\array.flow 10 1
+808 D:\flow9\lib\ds\array.flow 36 1
+837 D:\flow9\lib\ds\array.flow 39 1
+868 D:\flow9\lib\ds\array.flow 7 1
+901 D:\flow9\lib\ds\array.flow 19 1
+928 D:\flow9\lib\ds\array.flow 43 1
+963 D:\flow9\lib\ds\array.flow 358 0
+982 D:\flow9\lib\ds\array.flow 358 26
+991 D:\flow9\lib\ds\array.flow 358 26
+996 D:\flow9\lib\ds\array.flow 358 41
+1001 D:\flow9\lib\ds\array.flow 358 41
+1007 D:\flow9\lib\ds\array.flow 358 56
+1012 D:\flow9\lib\ds\array.flow 358 26
+1022 D:\flow9\lib\ds\array.flow 359 0
+1028 D:\flow9\lib\flowstructs.flow 10 1
+1046 D:\flow9\lib\flowstructs.flow 48 0
+1051 D:\flow9\lib\flowstructs.flow 49 1
+1060 D:\flow9\lib\flowstructs.flow 49 1
+1065 D:\flow9\lib\flowstructs.flow 49 9
+1070 D:\flow9\lib\flowstructs.flow 49 12
+1084 D:\flow9\lib\flowstructs.flow 49 37
+1089 D:\flow9\lib\flowstructs.flow 49 59
+1094 D:\flow9\lib\flowstructs.flow 49 37
+1105 D:\flow9\lib\flowstructs.flow 51 16
+1110 D:\flow9\lib\flowstructs.flow 51 16
+1121 D:\flow9\lib\flowstructs.flow 52 2
+1131 D:\flow9\lib\flowstructs.flow 53 8
+1142 D:\flow9\lib\flowstructs.flow 49 1
+1153 D:\flow9\lib\flowstructs.flow 54 0
+1206 D:\flow9\lib\securitymode.flow 37 32
+1227 D:\flow9\lib\securitymode.flow 21 41
+1233 D:\flow9\lib\securitymode.flow 23 0
+1256 D:\flow9\lib\securitymode.flow 24 1
+1262 D:\flow9\lib\securitymode.flow 24 37
+1272 D:\flow9\lib\securitymode.flow 24 1
+1288 D:\flow9\lib\securitymode.flow 24 49
+1295 D:\flow9\lib\securitymode.flow 25 0
+1301 D:\flow9\lib\securitymode.flow 47 0
+1326 D:\flow9\lib\securitymode.flow 48 1
+1332 D:\flow9\lib\securitymode.flow 48 45
+1337 D:\flow9\lib\securitymode.flow 48 49
+1350 D:\flow9\lib\securitymode.flow 48 1
+1368 D:\flow9\lib\securitymode.flow 49 0
+1374 D:\flow9\lib\securitymode.flow 43 0
+1400 D:\flow9\lib\securitymode.flow 44 1
+1402 D:\flow9\lib\securitymode.flow 44 1
+1404 D:\flow9\lib\securitymode.flow 44 2
+1417 D:\flow9\lib\securitymode.flow 44 21
+1429 D:\flow9\lib\securitymode.flow 44 43
+1435 D:\flow9\lib\securitymode.flow 45 0
+1441 D:\flow9\lib\runtime.flow 484 0
+1449 D:\flow9\lib\runtime.flow 485 0
+1454 D:\flow9\lib\runtime.flow 485 25
+1463 D:\flow9\lib\runtime.flow 485 29
+1468 D:\flow9\lib\runtime.flow 485 33
+1480 D:\flow9\lib\runtime.flow 485 36
+1490 D:\flow9\lib\runtime.flow 485 43
+1496 D:\flow9\lib\runtime.flow 486 0
+1525 D:\flow9\lib\runtime.flow 144 1
+1585 D:\flow9\lib\runtime.flow 390 37
+1588 D:\flow9\lib\runtime.flow 145 1
+1605 D:\flow9\lib\runtime.flow 146 2
+1614 D:\flow9\lib\runtime.flow 146 6
+1625 D:\flow9\lib\runtime.flow 147 3
+1630 D:\flow9\lib\runtime.flow 147 3
+1645 D:\flow9\lib\runtime.flow 146 2
+1646 D:\flow9\lib\runtime.flow 147 0
+1652 D:\flow9\lib\ds\tree.flow 267 0
+1667 D:\flow9\lib\ds\tree.flow 269 0
+1672 D:\flow9\lib\ds\tree.flow 270 1
+1681 D:\flow9\lib\ds\tree.flow 270 9
+1712 D:\flow9\lib\ds\tree.flow 280 3
+1722 D:\flow9\lib\ds\tree.flow 271 2
+1737 D:\flow9\lib\ds\tree.flow 271 2
+1752 D:\flow9\lib\ds\tree.flow 271 2
+1767 D:\flow9\lib\ds\tree.flow 271 2
+1782 D:\flow9\lib\ds\tree.flow 271 2
+1797 D:\flow9\lib\ds\tree.flow 272 7
+1802 D:\flow9\lib\ds\tree.flow 272 13
+1813 D:\flow9\lib\ds\tree.flow 273 4
+1818 D:\flow9\lib\ds\tree.flow 273 18
+1823 D:\flow9\lib\ds\tree.flow 273 4
+1838 D:\flow9\lib\ds\tree.flow 274 14
+1843 D:\flow9\lib\ds\tree.flow 274 21
+1854 D:\flow9\lib\ds\tree.flow 275 9
+1869 D:\flow9\lib\ds\tree.flow 277 4
+1874 D:\flow9\lib\ds\tree.flow 277 18
+1879 D:\flow9\lib\ds\tree.flow 277 4
+1890 D:\flow9\lib\ds\tree.flow 281 0
+1926 D:\flow9\lib\ds\tree.flow 201 0
+1938 D:\flow9\lib\ds\tree.flow 203 0
+1943 D:\flow9\lib\ds\tree.flow 204 1
+1952 D:\flow9\lib\ds\tree.flow 204 9
+1983 D:\flow9\lib\ds\tree.flow 216 12
+1988 D:\flow9\lib\ds\tree.flow 216 17
+1993 D:\flow9\lib\ds\tree.flow 216 24
+1998 D:\flow9\lib\ds\tree.flow 216 37
+2003 D:\flow9\lib\ds\tree.flow 216 50
+2018 D:\flow9\lib\ds\tree.flow 205 2
+2033 D:\flow9\lib\ds\tree.flow 205 2
+2048 D:\flow9\lib\ds\tree.flow 205 2
+2063 D:\flow9\lib\ds\tree.flow 205 2
+2078 D:\flow9\lib\ds\tree.flow 205 2
+2093 D:\flow9\lib\ds\tree.flow 206 7
+2098 D:\flow9\lib\ds\tree.flow 206 13
+2109 D:\flow9\lib\ds\tree.flow 207 4
+2114 D:\flow9\lib\ds\tree.flow 207 22
+2119 D:\flow9\lib\ds\tree.flow 207 25
+2124 D:\flow9\lib\ds\tree.flow 207 39
+2129 D:\flow9\lib\ds\tree.flow 207 44
+2134 D:\flow9\lib\ds\tree.flow 207 25
+2140 D:\flow9\lib\ds\tree.flow 207 52
+2145 D:\flow9\lib\ds\tree.flow 207 4
+2160 D:\flow9\lib\ds\tree.flow 208 14
+2165 D:\flow9\lib\ds\tree.flow 208 21
+2176 D:\flow9\lib\ds\tree.flow 210 13
+2181 D:\flow9\lib\ds\tree.flow 210 16
+2186 D:\flow9\lib\ds\tree.flow 210 23
+2191 D:\flow9\lib\ds\tree.flow 210 29
+2196 D:\flow9\lib\ds\tree.flow 210 36
+2211 D:\flow9\lib\ds\tree.flow 212 4
+2216 D:\flow9\lib\ds\tree.flow 212 22
+2221 D:\flow9\lib\ds\tree.flow 212 25
+2226 D:\flow9\lib\ds\tree.flow 212 31
+2231 D:\flow9\lib\ds\tree.flow 212 46
+2236 D:\flow9\lib\ds\tree.flow 212 51
+2241 D:\flow9\lib\ds\tree.flow 212 31
+2247 D:\flow9\lib\ds\tree.flow 212 4
+2258 D:\flow9\lib\ds\tree.flow 217 0
+2291 D:\flow9\lib\ds\tree.flow 192 0
+2309 D:\flow9\lib\ds\tree.flow 193 1
+2314 D:\flow9\lib\ds\tree.flow 194 0
+2320 D:\flow9\lib\ds\tree.flow 605 0
+2339 D:\flow9\lib\ds\tree.flow 606 1
+2348 D:\flow9\lib\ds\tree.flow 606 9
+2379 D:\flow9\lib\ds\tree.flow 607 15
+2389 D:\flow9\lib\ds\tree.flow 608 2
+2404 D:\flow9\lib\ds\tree.flow 608 2
+2419 D:\flow9\lib\ds\tree.flow 608 2
+2434 D:\flow9\lib\ds\tree.flow 608 2
+2449 D:\flow9\lib\ds\tree.flow 608 2
+2464 D:\flow9\lib\ds\tree.flow 608 35
+2469 D:\flow9\lib\ds\tree.flow 609 0
+2475 D:\flow9\lib\ds\tree.flow 284 0
+2498 D:\flow9\lib\ds\tree.flow 285 1
+2507 D:\flow9\lib\ds\tree.flow 285 1
+2512 D:\flow9\lib\ds\tree.flow 285 21
+2517 D:\flow9\lib\ds\tree.flow 285 8
+2523 D:\flow9\lib\ds\tree.flow 285 27
+2528 D:\flow9\lib\ds\tree.flow 285 1
+2538 D:\flow9\lib\ds\tree.flow 286 0
+2544 D:\flow9\lib\ds\tree.flow 229 0
+2564 D:\flow9\lib\ds\tree.flow 230 1
+2573 D:\flow9\lib\ds\tree.flow 230 10
+2578 D:\flow9\lib\ds\tree.flow 230 13
+2583 D:\flow9\lib\ds\tree.flow 230 16
+2588 D:\flow9\lib\ds\tree.flow 230 22
+2593 D:\flow9\lib\ds\tree.flow 230 29
+2598 D:\flow9\lib\ds\tree.flow 230 33
+2604 D:\flow9\lib\ds\tree.flow 230 50
+2609 D:\flow9\lib\ds\tree.flow 230 50
+2615 D:\flow9\lib\ds\tree.flow 230 29
+2621 D:\flow9\lib\ds\tree.flow 230 70
+2632 D:\flow9\lib\ds\tree.flow 231 0
+2638 D:\flow9\lib\ds\tree.flow 601 0
+2665 D:\flow9\lib\ds\tree.flow 602 1
+2674 D:\flow9\lib\ds\tree.flow 602 1
+2679 D:\flow9\lib\ds\tree.flow 602 21
+2684 D:\flow9\lib\ds\tree.flow 602 26
+2689 D:\flow9\lib\ds\tree.flow 602 1
+2699 D:\flow9\lib\ds\tree.flow 603 0
+2705 D:\flow9\lib\ds\tree.flow 628 0
+2731 D:\flow9\lib\ds\tree.flow 629 1
+2740 D:\flow9\lib\ds\tree.flow 629 9
+2771 D:\flow9\lib\ds\tree.flow 630 15
+2781 D:\flow9\lib\ds\tree.flow 631 2
+2796 D:\flow9\lib\ds\tree.flow 631 2
+2811 D:\flow9\lib\ds\tree.flow 631 2
+2826 D:\flow9\lib\ds\tree.flow 631 2
+2841 D:\flow9\lib\ds\tree.flow 631 2
+2856 D:\flow9\lib\ds\tree.flow 632 11
+2887 D:\flow9\lib\ds\tree.flow 634 5
+2897 D:\flow9\lib\ds\tree.flow 636 4
+2912 D:\flow9\lib\ds\tree.flow 636 4
+2927 D:\flow9\lib\ds\tree.flow 636 4
+2942 D:\flow9\lib\ds\tree.flow 636 4
+2957 D:\flow9\lib\ds\tree.flow 636 4
+2972 D:\flow9\lib\ds\tree.flow 637 5
+2977 D:\flow9\lib\ds\tree.flow 637 20
+2982 D:\flow9\lib\ds\tree.flow 637 24
+2987 D:\flow9\lib\ds\tree.flow 637 38
+2992 D:\flow9\lib\ds\tree.flow 637 41
+2997 D:\flow9\lib\ds\tree.flow 637 47
+3002 D:\flow9\lib\ds\tree.flow 637 24
+3008 D:\flow9\lib\ds\tree.flow 637 55
+3013 D:\flow9\lib\ds\tree.flow 637 5
+3023 D:\flow9\lib\ds\tree.flow 638 0
+3029 D:\flow9\lib\ds\tree.flow 612 0
+3056 D:\flow9\lib\ds\tree.flow 613 1
+3065 D:\flow9\lib\ds\tree.flow 613 9
+3096 D:\flow9\lib\ds\tree.flow 614 15
+3106 D:\flow9\lib\ds\tree.flow 615 2
+3121 D:\flow9\lib\ds\tree.flow 615 2
+3136 D:\flow9\lib\ds\tree.flow 615 2
+3151 D:\flow9\lib\ds\tree.flow 615 2
+3166 D:\flow9\lib\ds\tree.flow 615 2
+3181 D:\flow9\lib\ds\tree.flow 616 11
+3212 D:\flow9\lib\ds\tree.flow 618 5
+3222 D:\flow9\lib\ds\tree.flow 620 4
+3237 D:\flow9\lib\ds\tree.flow 620 4
+3252 D:\flow9\lib\ds\tree.flow 620 4
+3267 D:\flow9\lib\ds\tree.flow 620 4
+3282 D:\flow9\lib\ds\tree.flow 620 4
+3297 D:\flow9\lib\ds\tree.flow 621 5
+3302 D:\flow9\lib\ds\tree.flow 621 20
+3307 D:\flow9\lib\ds\tree.flow 621 24
+3312 D:\flow9\lib\ds\tree.flow 621 31
+3317 D:\flow9\lib\ds\tree.flow 621 45
+3322 D:\flow9\lib\ds\tree.flow 621 48
+3327 D:\flow9\lib\ds\tree.flow 621 56
+3332 D:\flow9\lib\ds\tree.flow 621 31
+3338 D:\flow9\lib\ds\tree.flow 621 5
+3348 D:\flow9\lib\ds\tree.flow 622 0
+3354 D:\flow9\lib\ds\tree.flow 233 0
+3378 D:\flow9\lib\ds\tree.flow 234 1
+3387 D:\flow9\lib\ds\tree.flow 234 13
+3392 D:\flow9\lib\ds\tree.flow 234 13
+3403 D:\flow9\lib\ds\tree.flow 235 14
+3408 D:\flow9\lib\ds\tree.flow 235 14
+3419 D:\flow9\lib\ds\tree.flow 237 11
+3424 D:\flow9\lib\ds\tree.flow 237 23
+3435 D:\flow9\lib\ds\tree.flow 239 21
+3440 D:\flow9\lib\ds\tree.flow 239 24
+3445 D:\flow9\lib\ds\tree.flow 239 27
+3450 D:\flow9\lib\ds\tree.flow 239 33
+3455 D:\flow9\lib\ds\tree.flow 239 40
+3460 D:\flow9\lib\ds\tree.flow 239 55
+3465 D:\flow9\lib\ds\tree.flow 239 40
+3471 D:\flow9\lib\ds\tree.flow 239 69
+3487 D:\flow9\lib\ds\tree.flow 241 5
+3489 D:\flow9\lib\ds\tree.flow 241 5
+3491 D:\flow9\lib\ds\tree.flow 241 5
+3496 D:\flow9\lib\ds\tree.flow 241 16
+3509 D:\flow9\lib\ds\tree.flow 241 22
+3514 D:\flow9\lib\ds\tree.flow 241 33
+3527 D:\flow9\lib\ds\tree.flow 241 38
+3532 D:\flow9\lib\ds\tree.flow 241 49
+3543 D:\flow9\lib\ds\tree.flow 242 2
+3553 D:\flow9\lib\ds\tree.flow 243 12
+3558 D:\flow9\lib\ds\tree.flow 243 22
+3569 D:\flow9\lib\ds\tree.flow 245 10
+3600 D:\flow9\lib\ds\tree.flow 246 16
+3610 D:\flow9\lib\ds\tree.flow 247 3
+3625 D:\flow9\lib\ds\tree.flow 247 3
+3640 D:\flow9\lib\ds\tree.flow 247 3
+3655 D:\flow9\lib\ds\tree.flow 247 3
+3670 D:\flow9\lib\ds\tree.flow 247 3
+3685 D:\flow9\lib\ds\tree.flow 248 4
+3690 D:\flow9\lib\ds\tree.flow 249 9
+3696 D:\flow9\lib\ds\tree.flow 249 25
+3701 D:\flow9\lib\ds\tree.flow 249 25
+3713 D:\flow9\lib\ds\tree.flow 249 40
+3723 D:\flow9\lib\ds\tree.flow 249 54
+3728 D:\flow9\lib\ds\tree.flow 249 68
+3733 D:\flow9\lib\ds\tree.flow 249 71
+3738 D:\flow9\lib\ds\tree.flow 249 77
+3743 D:\flow9\lib\ds\tree.flow 249 77
+3749 D:\flow9\lib\ds\tree.flow 249 54
+3755 D:\flow9\lib\ds\tree.flow 248 4
+3770 D:\flow9\lib\ds\tree.flow 255 10
+3801 D:\flow9\lib\ds\tree.flow 256 16
+3811 D:\flow9\lib\ds\tree.flow 257 3
+3826 D:\flow9\lib\ds\tree.flow 257 3
+3841 D:\flow9\lib\ds\tree.flow 257 3
+3856 D:\flow9\lib\ds\tree.flow 257 3
+3871 D:\flow9\lib\ds\tree.flow 257 3
+3886 D:\flow9\lib\ds\tree.flow 258 4
+3891 D:\flow9\lib\ds\tree.flow 259 9
+3897 D:\flow9\lib\ds\tree.flow 259 25
+3902 D:\flow9\lib\ds\tree.flow 259 25
+3914 D:\flow9\lib\ds\tree.flow 259 40
+3919 D:\flow9\lib\ds\tree.flow 259 54
+3924 D:\flow9\lib\ds\tree.flow 259 57
+3929 D:\flow9\lib\ds\tree.flow 259 57
+3935 D:\flow9\lib\ds\tree.flow 259 81
+3940 D:\flow9\lib\ds\tree.flow 259 40
+3951 D:\flow9\lib\ds\tree.flow 259 93
+3956 D:\flow9\lib\ds\tree.flow 258 4
+3966 D:\flow9\lib\ds\tree.flow 260 0
+3972 D:\flow9\labs\block1\lab4\lab4.flow 5 0
+3986 D:\flow9\labs\block1\lab4\lab4.flow 6 1
+3995 D:\flow9\labs\block1\lab4\lab4.flow 6 1
+4000 D:\flow9\labs\block1\lab4\lab4.flow 6 12
+4005 D:\flow9\labs\block1\lab4\lab4.flow 7 2
+4010 D:\flow9\labs\block1\lab4\lab4.flow 7 2
+4029 D:\flow9\labs\block1\lab4\lab4.flow 8 3
+4034 D:\flow9\labs\block1\lab4\lab4.flow 8 14
+4039 D:\flow9\labs\block1\lab4\lab4.flow 9 4
+4044 D:\flow9\labs\block1\lab4\lab4.flow 9 4
+4049 D:\flow9\labs\block1\lab4\lab4.flow 9 4
+4068 D:\flow9\labs\block1\lab4\lab4.flow 10 9
+4073 D:\flow9\labs\block1\lab4\lab4.flow 10 14
+4079 D:\flow9\labs\block1\lab4\lab4.flow 10 20
+4090 D:\flow9\labs\block1\lab4\lab4.flow 10 23
+4095 D:\flow9\labs\block1\lab4\lab4.flow 10 42
+4100 D:\flow9\labs\block1\lab4\lab4.flow 10 45
+4115 D:\flow9\labs\block1\lab4\lab4.flow 10 23
+4126 D:\flow9\labs\block1\lab4\lab4.flow 10 55
+4141 D:\flow9\labs\block1\lab4\lab4.flow 8 3
+4157 D:\flow9\labs\block1\lab4\lab4.flow 6 1
+4167 D:\flow9\labs\block1\lab4\lab4.flow 11 0
+4173 D:\flow9\labs\block1\lab4\lab4.flow 16 0
+4188 D:\flow9\labs\block1\lab4\lab4.flow 17 1
+4197 D:\flow9\labs\block1\lab4\lab4.flow 17 8
+4202 D:\flow9\labs\block1\lab4\lab4.flow 17 19
+4208 D:\flow9\labs\block1\lab4\lab4.flow 18 2
+4227 D:\flow9\labs\block1\lab4\lab4.flow 18 14
+4232 D:\flow9\labs\block1\lab4\lab4.flow 18 25
+4237 D:\flow9\labs\block1\lab4\lab4.flow 18 29
+4243 D:\flow9\labs\block1\lab4\lab4.flow 18 32
+4248 D:\flow9\labs\block1\lab4\lab4.flow 18 62
+4253 D:\flow9\labs\block1\lab4\lab4.flow 18 66
+4259 D:\flow9\labs\block1\lab4\lab4.flow 18 42
+4265 D:\flow9\labs\block1\lab4\lab4.flow 18 70
+4270 D:\flow9\labs\block1\lab4\lab4.flow 18 32
+4276 D:\flow9\labs\block1\lab4\lab4.flow 18 14
+4292 D:\flow9\labs\block1\lab4\lab4.flow 17 8
+4303 D:\flow9\labs\block1\lab4\lab4.flow 20 1
+4308 D:\flow9\labs\block1\lab4\lab4.flow 20 12
+4313 D:\flow9\labs\block1\lab4\lab4.flow 21 2
+4332 D:\flow9\labs\block1\lab4\lab4.flow 22 11
+4337 D:\flow9\labs\block1\lab4\lab4.flow 22 28
+4342 D:\flow9\labs\block1\lab4\lab4.flow 22 11
+4353 D:\flow9\labs\block1\lab4\lab4.flow 22 11
+4384 D:\flow9\labs\block1\lab4\lab4.flow 24 22
+4394 D:\flow9\labs\block1\lab4\lab4.flow 23 14
+4409 D:\flow9\labs\block1\lab4\lab4.flow 23 25
+4414 D:\flow9\labs\block1\lab4\lab4.flow 23 37
+4419 D:\flow9\labs\block1\lab4\lab4.flow 23 46
+4438 D:\flow9\labs\block1\lab4\lab4.flow 23 57
+4443 D:\flow9\labs\block1\lab4\lab4.flow 23 60
+4463 D:\flow9\labs\block1\lab4\lab4.flow 23 37
+4469 D:\flow9\labs\block1\lab4\lab4.flow 23 25
+4485 D:\flow9\labs\block1\lab4\lab4.flow 20 1
+4495 D:\flow9\labs\block1\lab4\lab4.flow 25 0
+4501 D:\flow9\labs\block1\lab4\lab4.flow 29 0
+4515 D:\flow9\labs\block1\lab4\lab4.flow 30 1
+4524 D:\flow9\labs\block1\lab4\lab4.flow 30 8
+4529 D:\flow9\labs\block1\lab4\lab4.flow 30 11
+4534 D:\flow9\labs\block1\lab4\lab4.flow 30 14
+4539 D:\flow9\labs\block1\lab4\lab4.flow 30 17
+4554 D:\flow9\labs\block1\lab4\lab4.flow 31 5
+4564 D:\flow9\labs\block1\lab4\lab4.flow 32 1
+4569 D:\flow9\labs\block1\lab4\lab4.flow 32 19
+4574 D:\flow9\labs\block1\lab4\lab4.flow 32 9
+4580 D:\flow9\labs\block1\lab4\lab4.flow 32 1
+4587 D:\flow9\labs\block1\lab4\lab4.flow 33 1
+4592 D:\flow9\labs\block1\lab4\lab4.flow 33 20
+4597 D:\flow9\labs\block1\lab4\lab4.flow 33 9
+4603 D:\flow9\labs\block1\lab4\lab4.flow 33 1
+4613 D:\flow9\labs\block1\lab4\lab4.flow 34 0
+4638 --end-- 0 -1
+
+L 606 1 0 i
+L 642 0 2 v
+L 642 1 0 m
+L 642 1 1 alternative
+L 748 1 0 url
+L 748 1 1 fn
+L 982 1 0 array
+L 982 1 1 value
+L 1028 1 0 a
+L 1028 1 1 e
+L 1075 0 2 t
+L 1075 1 0 acc
+L 1075 1 1 el
+L 1441 1 0 a
+L 1441 1 1 b
+L 1605 1 0 str
+L 1652 0 2 k
+L 1652 0 3 v
+L 1652 0 4 l
+L 1652 0 5 r
+L 1652 0 6 depth
+L 1652 1 0 set
+L 1652 1 1 key
+L 1926 0 3 k
+L 1926 0 4 v
+L 1926 0 5 left
+L 1926 0 6 right
+L 1926 0 7 depth
+L 1926 1 0 set
+L 1926 1 1 key
+L 1926 1 2 value
+L 2339 0 1 __
+L 2339 0 2 __
+L 2339 0 3 __
+L 2339 0 4 __
+L 2339 0 5 depth
+L 2339 1 0 tree
+L 2498 1 0 x
+L 2498 1 1 key
+L 2498 1 2 defaultValue
+L 2564 1 0 k
+L 2564 1 1 v
+L 2564 1 2 left
+L 2564 1 3 right
+L 2665 1 0 tree
+L 2665 1 1 key
+L 2731 0 1 k
+L 2731 0 2 v
+L 2731 0 3 left
+L 2731 0 4 right
+L 2731 0 5 depth
+L 2731 0 6 ck
+L 2731 0 7 cv
+L 2731 0 8 cleft
+L 2731 0 9 cright
+L 2731 0 10 cdepth
+L 2731 1 0 tree
+L 3056 0 1 k
+L 3056 0 2 v
+L 3056 0 3 left
+L 3056 0 4 right
+L 3056 0 5 depth
+L 3056 0 6 ck
+L 3056 0 7 cv
+L 3056 0 8 cleft
+L 3056 0 9 cright
+L 3056 0 10 cdepth
+L 3056 1 0 tree
+L 3378 0 4 leftDepth
+L 3378 0 5 rightDepth
+L 3378 0 6 balance
+L 3378 0 7 composed
+L 3378 0 8 rk
+L 3378 0 9 rv
+L 3378 0 10 rl
+L 3378 0 11 rr
+L 3378 0 12 rdepth
+L 3378 0 13 lk
+L 3378 0 14 lv
+L 3378 0 15 ll
+L 3378 0 16 lr
+L 3378 0 17 ldepth
+L 3378 1 0 k
+L 3378 1 1 v
+L 3378 1 2 left
+L 3378 1 3 right
+L 3986 1 0 arr
+L 3986 1 1 m
+L 4020 1 0 i
+L 4020 1 1 res1
+L 4020 1 2 v1
+L 4020 2 0 arr
+L 4020 2 1 m
+L 4059 1 0 j
+L 4059 1 1 res2
+L 4059 1 2 v2
+L 4059 2 0 v1
+L 4059 2 1 m
+L 4059 2 2 i
+L 4188 0 2 tree
+L 4188 1 0 arr
+L 4188 1 1 m
+L 4218 1 0 i
+L 4218 1 1 t
+L 4218 1 2 v
+L 4218 2 0 m
+L 4323 0 3 gsymswitch0
+L 4323 0 4 idx
+L 4323 1 0 i
+L 4323 1 1 res
+L 4323 1 2 v
+L 4323 2 0 tree
+L 4429 1 0 j
+L 4429 2 0 i
+L 4515 0 0 arr
+L 4515 0 1 m

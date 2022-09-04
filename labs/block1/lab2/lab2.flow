@@ -1,0 +1,12 @@
+import runtime;
+import string;
+
+aisum(arr : [int]) -> int {
+	fold(arr, 0, \x, y -> x + y);
+}
+
+
+main() {
+	arr = [1, 2, 3];
+	println(aisum(arr));
+}
