@@ -20,8 +20,8 @@ inds2(arr : [int], m : int) -> [Pair<int, int>] {
 	foldi(arr, [],
 		\i, res, v -> 
 			switch (lookupTree(tree, v)) {
-            		Some(idx): concat(res, map(idx, \j -> Pair(i, j)));
-            		None(): res;
+            			Some(idx): concat(res, map(idx, \j -> Pair(i, j)));
+            			None(): res;
 			}
 	);
 }
