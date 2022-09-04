@@ -1,1 +1,1 @@
-# methodsOfTranslationAnd-ompilation_nsu_labs
+# labs for methods of translation and compilation NSU course
