@@ -1,10 +1,11 @@
-exp = lb exp:e1 "+" exp:e2 rb { Add(:e1, :e2) }
-    | lb exp:e1 "-" exp:e2 rb { Sub(:e1, :e2) }
-    | lb exp:e1 "*" exp:e2 rb { Mul(:e1, :e2) }
-    | lb exp:e1 "/" exp:e2 rb { Div(:e1, :e2) }
+exp = lb exp:e1 ws "+" ws exp:e2 rb { Add(:e1, :e2) } | lb exp:e1 "+" exp:e2 rb { Add(:e1, :e2) }
+    | lb exp:e1 ws "-" ws exp:e2 rb { Sub(:e1, :e2) } | lb exp:e1 "-" exp:e2 rb { Sub(:e1, :e2) }
+    | lb exp:e1 ws "*" ws exp:e2 rb { Mul(:e1, :e2) } | lb exp:e1 "*" exp:e2 rb { Mul(:e1, :e2) }
+    | lb exp:e1 ws "/" ws exp:e2 rb { Div(:e1, :e2) } | lb exp:e1 "/" exp:e2 rb { Div(:e1, :e2) }
 	| int:e { :e };
 
 int = digit+$d { Int(s2i($d)) };
 digit = '0'-'9';
 lb = '(';
 rb = ')';
+ws = ' ';
