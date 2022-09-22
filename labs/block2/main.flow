@@ -13,6 +13,7 @@ Exp ::= Add, Sub, Mul, Div, Int;
     Div : (e1 : Exp, e2 : Exp);
 	Int : (i : int);
 
+
 lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
 lingoGrammar() {
 	onlyOnce(lingoGrammarOp, \ -> {
@@ -20,9 +21,11 @@ lingoGrammar() {
 	});
 }
 
+
 strToAst(str : string) {
     parsic(lingoGrammar(), str, defaultPegActions)
 }
+
 
 astToStr(AST : Exp) {
     switch (AST) {
@@ -34,6 +37,7 @@ astToStr(AST : Exp) {
     }
 }
 
+
 astToInt(AST : Exp) {
     switch (AST) {
         Add(e1, e2) : astToInt(e1) + astToInt(e2);
@@ -44,10 +48,12 @@ astToInt(AST : Exp) {
     }
 }
 
+
 calculate(str : string) {
     ast = strToAst(str);
     astToInt(ast);
 }
+
 
 main() {
     str = rtrim2(readUntil("\n"), "\n");
