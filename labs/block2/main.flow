@@ -1,0 +1,55 @@
+import runtime;
+import sys/system;
+import string;
+import ds/tree;
+import lingo/pegcode/driver;
+import lingo/pegcode/parsic;
+
+
+Exp ::= Add, Sub, Mul, Div, Int;
+	Add : (e1 : Exp, e2 : Exp);
+    Sub : (e1 : Exp, e2 : Exp);
+    Mul : (e1 : Exp, e2 : Exp);
+    Div : (e1 : Exp, e2 : Exp);
+	Int : (i : int);
+
+lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
+lingoGrammar() {
+	onlyOnce(lingoGrammarOp, \ -> {
+		compilePegGrammar("#include lingo.lingo");
+	});
+}
+
+strToAst(str : string) {
+    parsic(lingoGrammar(), str, defaultPegActions)
+}
+
+astToStr(AST : Exp) {
+    switch (AST) {
+        Add(e1, e2) : concatStrings(["(", astToStr(e1), "+", astToStr(e2), ")"]);
+        Sub(e1, e2) : concatStrings(["(", astToStr(e1), "-", astToStr(e2), ")"]);
+        Mul(e1, e2) : concatStrings(["(", astToStr(e1), "*", astToStr(e2), ")"]);
+        Div(e1, e2) : concatStrings(["(", astToStr(e1), "/", astToStr(e2), ")"]);
+        Int(i) : i2s(i);
+    }
+}
+
+astToInt(AST : Exp) {
+    switch (AST) {
+        Add(e1, e2) : astToInt(e1) + astToInt(e2);
+        Sub(e1, e2) : astToInt(e1) - astToInt(e2);
+        Mul(e1, e2) : astToInt(e1) * astToInt(e2);
+        Div(e1, e2) : astToInt(e1) / astToInt(e2);
+        Int(i) : i;
+    }
+}
+
+calculate(str : string) {
+    ast = strToAst(str);
+    astToInt(ast);
+}
+
+main() {
+    str = rtrim2(readUntil("\n"), "\n");
+    println(calculate(str));
+}
