@@ -22,12 +22,12 @@ lingoGrammar() {
 }
 
 
-strToAst(str : string) {
+strToAst(str : string) -> Exp {
     parsic(lingoGrammar(), str, defaultPegActions)
 }
 
 
-astToStr(AST : Exp) {
+astToStr(AST : Exp) -> string {
     switch (AST) {
         Add(e1, e2) : concatStrings(["(", astToStr(e1), "+", astToStr(e2), ")"]);
         Sub(e1, e2) : concatStrings(["(", astToStr(e1), "-", astToStr(e2), ")"]);
@@ -38,7 +38,7 @@ astToStr(AST : Exp) {
 }
 
 
-astToInt(AST : Exp) {
+astToInt(AST : Exp) -> int {
     switch (AST) {
         Add(e1, e2) : astToInt(e1) + astToInt(e2);
         Sub(e1, e2) : astToInt(e1) - astToInt(e2);
@@ -49,7 +49,7 @@ astToInt(AST : Exp) {
 }
 
 
-calculate(str : string) {
+calculate(str : string) -> int {
     ast = strToAst(str);
     astToInt(ast);
 }
