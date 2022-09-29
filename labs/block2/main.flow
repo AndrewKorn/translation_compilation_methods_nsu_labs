@@ -4,14 +4,18 @@ import string;
 import ds/tree;
 import lingo/pegcode/driver;
 import lingo/pegcode/parsic;
+import net/url_parameter;
+import math/math;
 
 
-Exp ::= Add, Sub, Mul, Div, Int;
-	Add : (e1 : Exp, e2 : Exp);
-    Sub : (e1 : Exp, e2 : Exp);
-    Mul : (e1 : Exp, e2 : Exp);
-    Div : (e1 : Exp, e2 : Exp);
-	Int : (i : int);
+Exp ::= Add, Sub, Mul, Div, Pow, Double, Var;
+	Add    : (e1 : Exp, e2 : Exp);
+    Sub    : (e1 : Exp, e2 : Exp);
+    Mul    : (e1 : Exp, e2 : Exp);
+    Div    : (e1 : Exp, e2 : Exp);
+    Pow    : (e1 : Exp, e2 : Exp);
+	Double : (i : double); 
+    Var    : (v : string);
 
 
 lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
@@ -29,33 +33,169 @@ strToAst(str : string) -> Exp {
 
 astToStr(AST : Exp) -> string {
     switch (AST) {
-        Add(e1, e2) : concatStrings(["(", astToStr(e1), "+", astToStr(e2), ")"]);
-        Sub(e1, e2) : concatStrings(["(", astToStr(e1), "-", astToStr(e2), ")"]);
-        Mul(e1, e2) : concatStrings(["(", astToStr(e1), "*", astToStr(e2), ")"]);
-        Div(e1, e2) : concatStrings(["(", astToStr(e1), "/", astToStr(e2), ")"]);
-        Int(i) : i2s(i);
+        Add(e1, e2) : concatStrings(["(", astToStr(e1), " + ", astToStr(e2), ")"]);
+        Sub(e1, e2) : concatStrings(["(", astToStr(e1), " - ", astToStr(e2), ")"]);
+        Mul(e1, e2) : concatStrings(["(", astToStr(e1), " * ", astToStr(e2), ")"]);
+        Div(e1, e2) : concatStrings(["(", astToStr(e1), " / ", astToStr(e2), ")"]);
+        Pow(e1, e2) : concatStrings(["(", astToStr(e1), " ^ ", astToStr(e2), ")"]);
+        Double(i)   : d2s(i);
+        Var(v)      : v;
     }
 }
 
 
-astToInt(AST : Exp) -> int {
+astToRPN(AST : Exp) -> string {
     switch (AST) {
-        Add(e1, e2) : astToInt(e1) + astToInt(e2);
-        Sub(e1, e2) : astToInt(e1) - astToInt(e2);
-        Mul(e1, e2) : astToInt(e1) * astToInt(e2);
-        Div(e1, e2) : astToInt(e1) / astToInt(e2);
-        Int(i) : i;
+        Add(e1, e2) : concatStrings([astToRPN(e1), astToRPN(e2), "+ "]);
+        Sub(e1, e2) : concatStrings([astToRPN(e1), astToRPN(e2), "- "]);
+        Mul(e1, e2) : concatStrings([astToRPN(e1), astToRPN(e2), "* "]);
+        Div(e1, e2) : concatStrings([astToRPN(e1), astToRPN(e2), "/ "]);
+        Pow(e1, e2) : concatStrings([astToRPN(e1), astToRPN(e2), "^ "]);
+        Double(i)   : concatStrings([d2s(i), " "]);
+        Var(v)      : concatStrings([v, " "]);
     }
 }
 
 
-calculate(str : string) -> int {
+// RpnToAst(str : string) -> Exp {
+//     parsic(compilePegGrammar("#include rpnlingo.lingo"), str, defaultPegActions);
+// }
+
+
+astToDouble(AST : Exp, varsTree : Tree<string, double>) -> double {
+    switch (AST) {
+        Add(e1, e2) : astToDouble(e1, varsTree) + astToDouble(e2, varsTree);
+        Sub(e1, e2) : astToDouble(e1, varsTree) - astToDouble(e2, varsTree);
+        Mul(e1, e2) : astToDouble(e1, varsTree) * astToDouble(e2, varsTree);
+        Div(e1, e2) : astToDouble(e1, varsTree) / astToDouble(e2, varsTree);
+        Pow(e1, e2) : dpow(astToDouble(e1, varsTree), astToDouble(e2, varsTree));
+        Double(i)   : i;
+        Var(v)      : lookupTreeDef(varsTree, v, doubleMin);
+    }
+}
+
+
+calculate(str : string, varsTree) -> double {
     ast = strToAst(str);
-    astToInt(ast);
+    astToDouble(ast, varsTree);
+}
+
+
+getVars() -> Tree<string, double> {
+    varsNames = strSplit(getUrlParameter("vars"), ",");
+    fold(varsNames, makeTree(), \tree, var -> setTree(tree, var, s2d(getUrlParameter(var))));
+}
+
+
+differentiation(AST : Exp, var : string) -> Exp {
+    switch(AST) {
+        Add(e1, e2) : Add(differentiation(e1, var), differentiation(e2, var));
+        Sub(e1, e2) : Sub(differentiation(e1, var), differentiation(e2, var));
+        Mul(e1, e2) : Add(Mul(differentiation(e1, var), e2), Mul(e1, differentiation(e2, var)));
+        Div(e1, e2) : Div(Sub(Mul(differentiation(e1, var), e2), Mul(e1, differentiation(e2, var))), Pow(e2, Double(2.0)));
+        Pow(e1, e2) : Mul(Mul(e2, Pow(e1, Sub(e2, Double(1.0)))), differentiation(e1, var));
+        Double(x)   : Double(0.0);
+        Var(v)      : if (v == var) Double(1.0) else Double(0.0);
+    }
+}
+
+
+simplify(AST : Exp) -> Exp {
+    switch(AST) {
+        Add(e1, e2) : {
+            e1_s = simplify(e1);
+            e2_s = simplify(e2);
+
+            if (e1_s == Double(0.0)) {
+                e2_s;
+            } 
+            else if (e2_s == Double(0.0)) {
+                e1_s;
+            }
+            else Add(e1_s, e2_s);
+        }
+        Sub(e1, e2) : {
+            e1_s = simplify(e1);
+            e2_s = simplify(e2);
+
+            if (e2_s == Double(0.0)) {
+                e1_s;
+            }
+            else if (e1_s == e2_s) {
+                Double(0.0);
+            } 
+            else Sub(e1_s, e2_s);
+        }
+        Mul(e1, e2) : {
+            e1_s = simplify(e1);
+            e2_s = simplify(e2);
+
+            if (e1_s == Double(0.0)) {
+                Double(0.0);
+            } 
+            else if (e2_s == Double(0.0)) {
+                Double(0.0);
+            }
+            else if (e1_s == Double(1.0)) {
+                e2_s;
+            }
+            else if (e2_s == Double(1.0)) {
+                e1_s;
+            }
+            else Mul(e1_s, e2_s);
+        }
+        Div(e1, e2) : {
+            e1_s = simplify(e1);
+            e2_s = simplify(e2);
+
+            if (e2_s == Double(1.0)) {
+                e1_s;
+            }
+            else if (e1_s == e2_s) {
+                Double(1.0);
+            }
+            else Div(e1_s, e2_s);
+        }
+        Pow(e1, e2) : {
+            e1_s = simplify(e1);
+            e2_s = simplify(e2);
+
+            if (e2_s == Double(0.0)) {
+                Double(1.0);
+            }
+            else if (e2_s == Double(1.0)) {
+                e1_s;
+            }
+            else if (e1_s == Double(0.0)) {
+                Double(0.0);
+            }
+            else if (e1_s == Double(1.0)) {
+                Double(1.0);
+            }
+            else Pow(e1_s, e2_s);
+        }
+        default : AST
+    }
 }
 
 
 main() {
+    print("Enter the expression: ");
     str = rtrim2(readUntil("\n"), "\n");
-    println(calculate(str));
+    ast = strToAst(str);
+    
+    println(concatStrings(["RPN: ", astToRPN(ast)]));
+
+    print("AST: ");
+    println(ast);
+
+    print("Simplify AST: ");
+    println(simplify(ast));
+
+    d_ast = differentiation(ast, "x");
+    print("differentiation: ");
+    println(d_ast);
+
+    print("simplify differentiation: ");
+    println(simplify(d_ast));
 }
