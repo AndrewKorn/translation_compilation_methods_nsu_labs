@@ -3,5 +3,24 @@ VAR y : [INT];
 VAR z : [[INT]];
 VAR w : INT;
 (
-    ((((y < 100)?; y := (y + 1); PRINT(y)))*; (y >= 100)?)
+    x := 1;
+    w := 10;
+
+    PRINT(x);
+
+    ((PRINT(x); x := 10) U (PRINT(x); x := 20) U (PRINT(x); x := 30));
+    PRINT(x);
+
+    PRINT(x);
+
+    (x < 100)?;
+    x := 101;
+
+    IF x == 10 THEN (PRINT(x); x := 20)
+    ELSE (PRINT(x); x := 30);
+
+    WHILE x < w DO (
+        y := (UPD(src, x, x));
+        x := (x + 1)
+    )
 )  
