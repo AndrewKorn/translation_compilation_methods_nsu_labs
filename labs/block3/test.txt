@@ -1,0 +1,7 @@
+VAR x : INT; 
+VAR y : [INT];
+VAR z : [[INT]];
+VAR w : INT;
+(
+    ((((y < 100)?; y := (y + 1); PRINT(y)))*; (y >= 100)?)
+)  

@@ -1,0 +1,70 @@
+import runtime;
+import string;
+import lingo/pegcode/driver;
+import lingo/pegcode/parsic;
+import exp;
+import types;
+
+
+export {
+    NemoProg: (decl: [VarDecl], body: Body);
+
+    Body ::= Assign, Print, Iter, Test, Choice, Sequence;
+    Assign: (var: Var, e: Exp);
+    Print: (e: Exp);
+    Iter: (b: Body);
+    Test: (op: string, e1: Exp, e2: Exp);
+    Choice: (b: [Body]);
+    Sequence: (b: [Body]);
+
+    parseNemo(file: string) -> NemoProg;
+}
+
+BuildChoice(data: [flow]) -> Choice {
+    Choice(concat([data[0]], data[1]));
+}
+
+BuildSeq(data: [flow]) -> Sequence {
+    Sequence(concat([data[0]], data[1]));
+}
+
+NotOp(op: string) -> string{
+    if(op == "==") {
+       "!=";
+    } else if(op == "!=") {
+        "==";
+    } else if(op == "<=") {
+       ">";
+    } else if(op == ">") {
+       "<=";
+    } else if(op == ">="){
+        "<";
+    } else if(op == "<") {
+       ">=";
+    } else {
+      op;
+    }
+}
+
+BuildWhile(data: [flow]) -> Sequence {
+    Sequence([Iter(Sequence([Test(data[0], data[1], data[2]), data[3]])), Test(NotOp(data[0]), data[1], data[2])]);
+}
+
+BuildIfElse(data: [flow]) -> Choice {
+    Choice([Sequence([Test(data[0], data[1], data[2]), data[3]]), Sequence([Test(NotOp(data[0]), data[1], data[2]), data[4]])]);
+}
+
+
+parseNemo(file: string) -> NemoProg {
+    str = getFileContent(file);
+
+    specialPegActions = {
+        t1 = setTree(defaultPegActions.t, "BuildSeq", BuildSeq);
+        t2 = setTree(t1, "BuildChoice", BuildChoice);
+        t3 = setTree(t2, "BuildIfElse", BuildIfElse);
+        t4 = setTree(t3, "BuildWhile", BuildWhile);
+        SemanticActions(t4);
+    }
+
+    parsic(compilePegGrammar("#include nemo_lingo.lingo"), str, specialPegActions);
+}

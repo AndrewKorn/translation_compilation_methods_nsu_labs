@@ -1,0 +1,8 @@
+export {
+    Exp ::= BinaryOp, Const, App, Upd, Var;
+    BinaryOp: (op: string, e1: Exp, e2: Exp);
+    Const: (i: int);
+    App: (arr: Exp, i: Exp);
+    Upd: (arr: Exp, i: Exp, v: Exp);
+    Var: (v: string);
+}

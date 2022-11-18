@@ -1,0 +1,8 @@
+export {
+    VarDecl: (var: string, type: Type);
+
+    Type ::= bType, aType;
+    bType (t: string);
+    aType (t: Type);
+
+}

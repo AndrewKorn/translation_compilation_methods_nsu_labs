@@ -1,0 +1,23 @@
+import runtime;
+import string;
+import lingo/pegcode/driver;
+import lingo/pegcode/parsic;
+import exp;
+import types;
+
+export {
+    VnemoProg: (d: [VarDecl], s: [Statement]);
+    
+    Statement ::= AssignStatement, PrintStatement, IfElse;
+    AssignStatement: (id: int, var: string, e: Exp, goto: [Label]);
+    PrintStatement: (id: int, e: Exp, goto: [Label]);
+    IfElse: (id: int, op: string, e1: Exp, e2: Exp, ifGoto: [Label], elseGoto : [Label]);
+
+    Label(id: int);
+
+    parseVnemo(file: string) -> VnemoProg; 
+}
+
+parseVnemo(str: string) -> VnemoProg {
+    parsic(compilePegGrammar("#include vnemo_lingo.lingo"), str, defaultPegActions);
+}

@@ -1,0 +1,139 @@
+import nemo_parser;
+import vnemo_parser;
+
+export {
+    translateNemoProgram(program: NemoProg) -> string;
+}
+
+type2str(type: Type) -> string{
+    switch (type) {
+		bType(t): "int";
+		aType(arrtype): "[" + type2str(arrtype) + "]";
+	}
+}
+
+
+variableDeclaration2str(oneDecl: VarDecl) -> string {
+    "var " + oneDecl.var + " : " + type2str(oneDecl.type) + ";";
+}
+
+variablesDeclarations2str(varDeclarations: [VarDecl]) -> string {
+  	strGlue(map(varDeclarations, variableDeclaration2str), "\n"); 
+}
+
+label2str(label: Label) -> string {
+    i2s(label.id);
+}
+
+exp2str(e: Exp) -> string {
+    switch(e) {
+        BinaryOp(op, e1, e2): "(" + exp2str(e1) + op + exp2str(e2) + ")";
+        Const(v): i2s(v);
+        App(array, index): "app(" + exp2str(array) + "," + exp2str(index) + ")";
+        Upd(array, index, newValue): "upd(" + exp2str(array) + "," + exp2str(index) + "," + exp2str(newValue) + ")";
+        Var(name): name;
+    }
+}
+
+statement2str(s : Statement) -> string {
+	switch (s) {
+		AssignStatement(label, var, e, goto): {
+            i2s(label) + ": " + var + " := " + exp2str(e) + " goto {" + strGlue(map(goto, label2str), ", ") + "}";
+        }
+		IfElse(label, op, e1, e2, ifGoto, elseGoto):{  
+			i2s(label) + ": " + 
+            "if " + exp2str(e1) + " " + op + " " + exp2str(e2) + " " +
+			"then {" + strGlue(map(ifGoto, label2str), ",") + "} else " + 
+			"{" + strGlue(map(elseGoto, label2str), ",") + "}";
+        }
+		PrintStatement(label, expr, goto): {
+            i2s(label) + ": print(" + exp2str(expr) + ")  goto {" + strGlue(map(goto, label2str), " ") + "}";
+        }
+	}
+} 
+
+State(src: string, maxLabel: int, prevStateMaxLabel: int);
+
+
+body2str(body : Body, prevState : State) -> State {
+	switch(body) {
+		Assign(var, expr): assignBody2str(var, expr, prevState);
+        Print(expr) : printBody2str(expr, prevState);
+		Test(op, e1, e2) : testBody2str(op, e1, e2, prevState);
+		Sequence(operators) : fold(operators, prevState, \currentState, nextOperator -> body2str(nextOperator, currentState));
+		Choice(operators) : choiceBody2str(operators, prevState);
+		Iter(loopOperator) : iterBody2str(loopOperator, prevState);
+	}
+}
+
+assignBody2str(var: Var, e: Exp, prevState: State) -> State {
+    gotoLabel = prevState.maxLabel + 1;
+    newSrcTranslatedLine = makeLine(statement2str(AssignStatement(prevState.maxLabel, var.v, e, [Label(gotoLabel)])));
+	State(prevState.src + newSrcTranslatedLine, gotoLabel, prevState.maxLabel);
+}
+
+printBody2str(e: Exp, prevState: State) -> State {
+    gotoLabel = prevState.maxLabel + 1;
+    newSrcTranslatedLine = makeLine(statement2str(PrintStatement(prevState.maxLabel, e, [Label(gotoLabel)])));
+    State(prevState.src + newSrcTranslatedLine, gotoLabel, prevState.maxLabel);
+}
+
+testBody2str(op: string, e1: Exp, e2: Exp, prevState: State) -> State {
+    gotoLabel = prevState.maxLabel + 1;
+    newSrcTranslatedLine = makeLine(statement2str(IfElse(prevState.maxLabel, op, e1, e2, [Label(gotoLabel)], [])));
+    State(prevState.src + newSrcTranslatedLine, gotoLabel, prevState.maxLabel);
+}
+
+iterBody2str(body: Body, prevState: State) -> State {
+    gotoLabel = prevState.maxLabel + 1;
+    translatedBody = body2str(body, State("", gotoLabel, prevState.maxLabel));
+    end = translatedBody.maxLabel;
+    startIter = makeLine(statement2str(IfElse(prevState.maxLabel, "==", Const(1), Const(1), map([gotoLabel, end+1], \id -> Label(id)), [])));
+    backToStart = makeLine(statement2str(IfElse(end, "==", Const(1), Const(1), map([prevState.maxLabel], \id -> Label(id)), [])));
+    State(prevState.src + startIter + translatedBody.src + backToStart, end + 1, prevState.maxLabel);
+}
+
+
+splitOperators(operators: [Body], prevLabel: int) -> [State]{
+    fold(
+        tail(operators),
+        [body2str(operators[0], State("", prevLabel + 1, prevLabel))],
+        \acc, nextOperator -> concat(acc, [body2str(nextOperator, State("", acc[length(acc)-1].maxLabel + 1, acc[length(acc)-1].maxLabel))])
+    );
+}
+
+makeSrcFromChoiceOperators(operatorsStates: [State]) -> string {
+    lastOperatorState = operatorsStates[length(operatorsStates) - 1];
+    end = lastOperatorState.maxLabel;
+    concatStrings(map(take(operatorsStates, length(operatorsStates) - 1), 
+        \state -> state.src + makeLine(statement2str(IfElse(state.maxLabel, "==", Const(1), Const(1), map([end], \id -> Label(id)), []))))
+    ) + lastOperatorState.src;
+}
+
+choiceBody2str(operators: [Body], prevState: State) -> State {
+    operatorsStates = splitOperators(operators, prevState.maxLabel);
+    nextLabels = map(operatorsStates, \state -> state.maxLabel);
+    operatorsStartLabels = concat([prevState.maxLabel + 1], map(take(nextLabels, length(nextLabels) - 1), \label -> label + 1)); 
+    startChoice = makeLine(statement2str(IfElse(prevState.maxLabel, "==", Const(1), Const(1), map(operatorsStartLabels, \id -> Label(id)), [])));
+    operatorsSrc = makeSrcFromChoiceOperators(operatorsStates);
+
+    State(
+        prevState.src 
+        + startChoice
+        + operatorsSrc,
+    operatorsStates[length(operatorsStates) - 1].maxLabel,
+    prevState.maxLabel
+    );
+}
+
+makeLine(str: string) -> string {
+    str + "\n";
+}
+
+translateDeclarations(decls: [VarDecl]) -> State {
+    State(makeLine(variablesDeclarations2str(decls)), 0, -1);
+}
+
+translateNemoProgram(program: NemoProg) -> string {
+    body2str(program.body, translateDeclarations(program.decl)).src;
+}

@@ -1,0 +1,28 @@
+prog = ws varDecl*:d ws statement*:s {VnemoProg(:d, :s) };
+
+varDecl = ws "var" ws name$n ws ":" ws type:t ws ";" ws { VarDecl($n, :t) };
+
+type  = int | array;
+int   =  ws "int" ws                { bType("int") };
+array =  ws "[" ws type:t ws "]" ws { aType(:t) };
+
+statement = assign | ifelse | print;
+assign = ws (digit+)$id ws ":" ws name$v ws ":=" ws exp:e ws "goto" ws "{" ws label*:labels ws "}" ws                                                           { AssignStatement(s2i($id), $v, :e, :labels) };
+ifelse = ws (digit+)$id ws ":" ws "if" ws exp:e1 ws comparisonOp$op ws exp:e2 ws "then" ws "{" ws label*:ifg ws "}" ws "else" ws "{" ws label*:elseg ws "}" ws  { IfElse(s2i($id), $o, :e1, :e2, :ifg, :elseg) };
+print = ws (digit+)$id ws ":" ws "print" ws "(" exp:e ")" ws "goto" ws "{" ws label*:labels ws "}" ws                                                           { PrintStatement(s2i($id), :e, :labels) };
+
+exp = bin | const | app | upd | var;
+bin = ws "(" exp:e1 binaryOp$op exp:e2 ")" ws                                  { BinaryOp($op, :e1, :e2) };
+const = ws digit+$d ws                                                         { Const(s2i ($d)) };
+app  = ws "app" ws "(" ws exp:array "," ws exp:index ")" ws                    { App(:array, :index) };
+upd = ws "upd" ws "(" ws exp:array "," ws exp:index "," ws exp:newValue ")" ws { Upd(:array, :index, :newValue) };
+var = ws name$l ws                                                             { Var($l) };      
+
+comparisonOp = ("==" | "<=" | ">=" | "<" | ">" | "!=");
+binaryOp = ("+" | "*" | "/" | "-" | "%");
+
+name = char+;
+label = ws digit+$d ws ","? ws { Label(s2i($d)) };
+char = 'a'-'z';
+digit = '0'-'9';
+ws = (' ' | '\t' | '\n' | '\r')*;

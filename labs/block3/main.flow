@@ -1,0 +1,19 @@
+import runtime;
+import translator;
+
+
+main() {
+    nemoProg = parseNemo("./test.txt");
+    println("NEMO PROG AST\n_________________");
+    println(nemoProg);
+    println("\n");
+
+    vnemoStr = translateNemoProgram(nemoProg);
+    println("VNEMO PROG STR\n_________________");
+    println(vnemoStr);
+    println("\n");
+
+    vnemoProg = parseVnemo(vnemoStr);
+    println("VNEMO PROG AST\n_________________");
+    println(vnemoProg);
+}
