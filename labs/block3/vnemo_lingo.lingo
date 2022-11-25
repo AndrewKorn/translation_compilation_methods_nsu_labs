@@ -8,7 +8,7 @@ array =  ws "[" ws type:t ws "]" ws { aType(:t) };
 
 statement = assign | ifelse | print;
 assign = ws (digit+)$id ws ":" ws name$v ws ":=" ws exp:e ws "goto" ws "{" ws label*:labels ws "}" ws                                                           { AssignStatement(s2i($id), $v, :e, :labels) };
-ifelse = ws (digit+)$id ws ":" ws "if" ws exp:e1 ws comparisonOp$op ws exp:e2 ws "then" ws "{" ws label*:ifg ws "}" ws "else" ws "{" ws label*:elseg ws "}" ws  { IfElse(s2i($id), $o, :e1, :e2, :ifg, :elseg) };
+ifelse = ws (digit+)$id ws ":" ws "if" ws exp:e1 ws comparisonOp$op ws exp:e2 ws "then" ws "{" ws label*:ifg ws "}" ws "else" ws "{" ws label*:elseg ws "}" ws  { IfElse(s2i($id), $op, :e1, :e2, :ifg, :elseg) };
 print = ws (digit+)$id ws ":" ws "print" ws "(" exp:e ")" ws "goto" ws "{" ws label*:labels ws "}" ws                                                           { PrintStatement(s2i($id), :e, :labels) };
 
 exp = bin | const | app | upd | var;

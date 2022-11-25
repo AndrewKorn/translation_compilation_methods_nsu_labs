@@ -1,5 +1,6 @@
 import runtime;
 import translator;
+import executer;
 
 
 main() {
@@ -16,4 +17,9 @@ main() {
     vnemoProg = parseVnemo(vnemoStr);
     println("VNEMO PROG AST\n_________________");
     println(vnemoProg);
+    println("\n");
+
+
+    println("PROGRAMM OUTPUT\n________________");
+    executeVnemoProg(vnemoProg);
 }

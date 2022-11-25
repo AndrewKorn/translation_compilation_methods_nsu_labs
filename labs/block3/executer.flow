@@ -1,0 +1,284 @@
+import ds/set;
+import vnemo_parser;
+
+export {
+    executeVnemoProg(program : VnemoProg) -> void;
+}
+
+Value ::= Integer, Array;
+Integer(val : int);
+Array  (arr : [Value]);
+MemoryState(vars : Tree<string, Value>);
+Configuration(label : int, state : MemoryState);
+
+executeNextStatement(program : VnemoProg, configuration : Configuration, maxLabel: int) -> Set<Configuration> {
+    if (configuration.label > maxLabel){
+        emptyConfigurationSet();
+    } else{
+        statement = program.s[configuration.label];
+        switch (statement) {
+            AssignStatement(label, var, expr, goto)                              : AssignExecute(var, expr, goto, configuration);
+            IfElse(label, comparisonOp, lexpr, rexpr, ifGoto, elseGoto)          : IfElseExecute(comparisonOp, lexpr, rexpr, ifGoto, elseGoto, configuration);
+            PrintStatement(label, expr, goto)                                    : PrintExcecute(expr, goto, configuration); 
+        }
+    }
+}
+
+addAllGoto(goto: [Label], state: MemoryState) -> Set<Configuration>{
+    fold(goto, emptyConfigurationSet(), \acc, label -> insertSet(acc, Configuration(label.id, state)));
+}
+
+AssignExecute(var: string, expr: Exp, goto: [Label], configuration : Configuration) -> Set<Configuration> {
+    vMay = lookupTree(configuration.state.vars, var);
+    if (isNone(vMay)){
+        println("Unknown var=" + var);
+        emptyConfigurationSet();
+    }
+    else{
+        v = either(vMay, emptyInteger());
+        switch (executeExpression(expr, configuration.state)){
+            Some(exprVal): {
+                switch (exprVal){
+                    Integer(num): {
+                        switch (v){
+                            Integer(ign): {
+                                newState = MemoryState(setTree(configuration.state.vars, var, Integer(num)));
+                                addAllGoto(goto, newState);
+                            };
+                            default: {
+                                println("Try assign int to array");
+                                emptyConfigurationSet();
+                            };
+                        }
+                    };
+                    Array(arr): {
+                        switch (v){
+                            Array(ign): {
+                                newState = MemoryState(setTree(configuration.state.vars, var, Array(arr)));
+                                addAllGoto(goto, newState);
+                            };
+                            default: {
+                                println("Try assign array to int");
+                                emptyConfigurationSet();
+                            };
+                        }
+                    };
+                }
+                
+            };
+            None(): emptyConfigurationSet();
+        }
+    }
+}
+
+IfElseExecute(comparisonOp: string, lExpr: Exp, rExpr: Exp, ifGoto: [Label], elseGoto: [Label], configuration : Configuration) -> Set<Configuration> {
+    switch (comparisonOperation(comparisonOp, lExpr, rExpr, configuration.state)){
+        Some(isIf): {
+            if (isIf){
+                addAllGoto(ifGoto, configuration.state);
+            } else {
+                addAllGoto(elseGoto, configuration.state);
+            }
+        };
+        None(): emptyConfigurationSet();
+    }
+}
+
+PrintExcecute(expr: Exp, goto: [Label], configuration : Configuration) -> Set<Configuration> {
+    switch (executeExpression(expr, configuration.state)){
+        Some(valToPrint): {
+            println(val2s(valToPrint));
+            addAllGoto(goto, configuration.state);
+        };
+        None(): emptyConfigurationSet();
+    }
+}
+
+val2s(val : Value) -> string {
+	switch (val) {
+		Integer(n): i2s(n);
+		Array(arr): "[" + strGlue(map(arr, val2s), ", ") + "]";
+	}
+}
+
+calcComparisonOperation(comparisonOp: string, left: Maybe<Value>, right: Maybe<Value>) -> Maybe<bool> {
+    applyComparisonOp = \l, r -> {
+		if (comparisonOp == "==")      {l == r}  
+        else if (comparisonOp == "!=") {l != r}
+        else if (comparisonOp == "<=") {l <= r} 
+        else if (comparisonOp == ">=") {l >= r} 
+        else if (comparisonOp == "<")  {l < r}
+        else if (comparisonOp == ">")  {l > r} 
+        else {false};
+	}
+    if (isNone(left) || isNone(right)){
+        None()
+    } else{
+        switch (either(left, emptyInteger())) {
+            Integer(leftIntValue):
+                switch (either(right, emptyInteger())) {
+                    Integer(rightIntValue): Some(applyComparisonOp(leftIntValue, rightIntValue));
+                    default: {
+                        println("Right operand isn't integer");
+                        None();
+                    }
+                }
+            default: {
+                println("Left operand isn't integer");
+                None();
+            }
+        };
+    }
+}
+
+comparisonOperation(comparisonOp: string, le : Exp, re: Exp, state: MemoryState) -> Maybe<bool> {
+	calcComparisonOperation(comparisonOp, executeExpression(le, state), executeExpression(re, state))
+}
+
+calcBinaryOperation(binaryOp: string, left: Maybe<Value>, right: Maybe<Value>) -> Maybe<Value> {
+    applyBinaryOp = \binOp, l, r -> {
+		if (binOp == "+")      {l + r}
+        else if (binOp == "*") {l * r}
+        else if (binOp == "-") {l - r}
+        else if (binOp == "/") {l / r}
+        else emptyInteger().val;
+	};
+    if (isNone(left) || isNone(right)){
+        None()
+    } else{
+        switch (either(left, emptyInteger())) {
+            Integer(leftIntValue): {
+                switch (either(right, emptyInteger())) {
+                    Integer(rightIntValue):
+                        Some(Integer(applyBinaryOp(binaryOp, leftIntValue, rightIntValue)));
+                    default: {
+                        println("Right operand isn't integer");
+                        None();
+                    }
+                }
+            }
+            default: {
+                println("Left operand isn't integer");
+                None();
+            }
+        };
+    }
+}
+
+makeAppOperation(array: Maybe<Value> , index: Maybe<Value>) -> Maybe<Value>{
+    if (isNone(array) || isNone(index)){
+        None();
+    } else{
+        switch (either(array, emptyArray())) {
+            Array(arr): {
+                switch (either(index, emptyInteger())) {
+                    Integer(indexValue):
+                        if (indexValue >= 0 && indexValue < length(arr)) {
+                            Some(arr[indexValue]) 
+                        } else {
+                            None();
+                        }
+                    default: {
+                        println("Index is not an integer");
+                        None();
+                    }
+                }
+            }
+            default: {
+                println("APP working only with arrays");
+                None();
+            }
+        };
+    }
+}
+
+makeUpdOperation(array: Maybe<Value> , index: Maybe<Value>, newValue: Maybe<Value>) -> Maybe<Value> {
+    if (isNone(array) || isNone(index) || isNone(newValue)){
+        None();
+    } else{
+        switch (either(newValue, emptyInteger())) {
+            Integer(newV):{ 
+                    switch (either(array, emptyArray())) {
+                        Array(arr): {
+                            switch (either(index, emptyInteger())) {
+                                Integer(indexValue):
+                                    if (indexValue <= length(arr)) {
+                                       Some(Array(replace(arr, indexValue, Integer(newV))));
+                                    } else {
+                                        println("Array index greater than array len");
+                                        None();
+                                    }
+                                default: {
+                                    println("Array index isn't integer");
+                                    None();
+                                }
+                            }
+                        }
+                        default: {
+                            println("UPD working only with arrays");
+                            None();
+                        }
+                    }
+            }
+            default: {
+                println("New value isn't integer");
+                None();
+            }
+        };
+    }
+}
+
+executeExpression(expression : Exp, state : MemoryState) -> Maybe<Value> {
+	switch (expression) {
+		BinaryOp(binaryOp, lExp, rExp)       : calcBinaryOperation(binaryOp, executeExpression(lExp, state), executeExpression(rExp, state));
+		Upd(arrayExp, indexExp, newValueExp) : makeUpdOperation(executeExpression(arrayExp, state), executeExpression(indexExp, state), executeExpression(newValueExp, state));	
+		App(arrayExp, indexExp)              : makeAppOperation(executeExpression(arrayExp, state), executeExpression(indexExp, state));
+		Var(var)                             : lookupTree(state.vars, var);
+		Const(number)                        : Some(Integer(number));
+	}
+}
+
+initType(type : Type) -> Value {
+	switch (type) {
+		bType(b): emptyInteger();
+		aType(a): emptyArray();
+	}
+}
+
+emptyInteger() -> Integer {
+    Integer(0);
+}
+
+emptyArray() -> Array {
+    Array([]);
+}
+
+emptyConfigurationSet() -> Set<Configuration>{
+    makeSet();
+}
+
+initState(vars: [VarDecl]) -> MemoryState {
+    MemoryState(fold(vars, makeTree(), \acc, varDecl ->
+		switch (lookupTree(acc, varDecl.var)) {
+			Some(ign): {
+                println("Var=" + varDecl.var + " already declared");
+                assert(false, "Var=" + varDecl.var + " already declared");
+                acc;
+            };  
+			None(): setTree(acc, varDecl.var, initType(varDecl.type));
+		}
+	));
+}
+
+
+findMaxLabel(statements: [Statement]) -> int {
+    fold(statements, statements[0].id, \prevMax, elem -> max(elem.id, prevMax));
+}
+
+executeVnemoProg(program : VnemoProg) -> void {
+	maxLabel = findMaxLabel(program.s);
+    initSet = buildSet([Configuration(0, initState(program.d))]); 
+    exitPredicate = \s -> existsSet(s, \configuration -> configuration.label <= maxLabel);
+    nextStep = \s -> foldSet(s, makeSet(), \acc, configuration -> mergeSets(acc, executeNextStatement(program, configuration, maxLabel)));
+	execute = for(initSet, exitPredicate, nextStep);
+}
